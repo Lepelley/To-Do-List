@@ -21,58 +21,60 @@ function createInput(type, value = "", name =  "", placeholder = "", require = f
 }
 
 const addTaskElt = document.getElementById("add_task")
-const listElt = document.getElementById("list_task")
-// Reset button
+const formElt = document.getElementById("list_task")
+const inputElt = createInput("text", "", "task", "Entrez votre tâche")
+const submitElt = createInput("submit", "Ajouter")
 
 const buttonElt = document.createElement("button")
 buttonElt.textContent = "Ajouter une tâche"
 addTaskElt.appendChild(buttonElt)
 
 buttonElt.addEventListener("click", function(e) {
-    // Create form
     addTaskElt.removeChild(buttonElt)
-    const formElt = document.createElement("form")
-    const taskElt = createInput("text", "", "task", "Entrez votre tâche", true)
-    const submitElt = createInput("submit", "Ajouter")
-    formElt.appendChild(taskElt)
-    formElt.appendChild(submitElt)
-    addTaskElt.appendChild(formElt)
+    addTaskElt.appendChild(inputElt)
+    addTaskElt.appendChild(submitElt)
+    inputElt.focus()
 
     formElt.addEventListener("submit", function(e) {
         e.preventDefault()
-        
-        const itemElt = document.createElement("p")
+        const itemElt = document.createElement("span")
         const checkElt = createInput("checkbox")
-        const labelElt = document.createElement("label")
-        labelElt.textContent = e.target.task.value
-        itemElt.appendChild(checkElt)
-        itemElt.appendChild(labelElt)
-        listElt.appendChild(itemElt)
-        // Switch form and button
-        addTaskElt.removeChild(formElt)
-        addTaskElt.appendChild(buttonElt)
+        const taskElt = document.createElement("span")
+        if (e.target.task.value !== "") {
+            taskElt.textContent = e.target.task.value
+            itemElt.classList.add("item")
+            itemElt.appendChild(checkElt)
+            itemElt.appendChild(taskElt)
+            formElt.appendChild(itemElt)
+            // Switch form and button
+            inputElt.value = ""
+            inputElt.disabled
+            addTaskElt.removeChild(inputElt)
+            addTaskElt.removeChild(submitElt)
+            addTaskElt.appendChild(buttonElt)
+        }
+
 
         // We can edit the task by clicking it
-        labelElt.addEventListener("click", function(e) {
+        taskElt.addEventListener("click", function() {
             const result = prompt("Modifier la tâche")
-            console.log(result)
             if (result === null) {
                 
             }
             else if (result === "") {
-                listElt.removeChild(itemElt)
+                formElt.removeChild(itemElt)
             }
             else {
-                labelElt.textContent = result
+                taskElt.textContent = result
             }
         })
 
         checkElt.addEventListener("change", function(e) {
             if (e.target.checked) { // if check, task done
-                labelElt.setAttribute("style", "color:gray;text-decoration:line-through")
+                taskElt.setAttribute("style", "color:gray;text-decoration:line-through")
             }
             else {
-                labelElt.setAttribute("style", "color:black")
+                taskElt.setAttribute("style", "color:black")
             }
         })
     })
