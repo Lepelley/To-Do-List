@@ -31,6 +31,7 @@ addTaskElt.appendChild(buttonElt)
 
 buttonElt.addEventListener("click", function(e) {
     addTaskElt.removeChild(buttonElt)
+    inputElt.setAttribute("autocomplete", "on")
     addTaskElt.appendChild(inputElt)
     addTaskElt.appendChild(submitElt)
     inputElt.focus()
@@ -48,7 +49,7 @@ buttonElt.addEventListener("click", function(e) {
             formElt.appendChild(itemElt)
             // Switch form and button
             inputElt.value = ""
-            inputElt.disabled
+            inputElt.setAttribute("autocomplete", "off")
             addTaskElt.removeChild(inputElt)
             addTaskElt.removeChild(submitElt)
             addTaskElt.appendChild(buttonElt)
