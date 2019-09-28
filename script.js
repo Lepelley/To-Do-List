@@ -58,7 +58,7 @@ buttonElt.addEventListener("click", function(e) {
 
         // We can edit the task by clicking it
         taskElt.addEventListener("click", function(e) {
-            const result = prompt("Modifier la tâche", e.target.textContent.value)
+            const result = prompt("Modifier la tâche", e.target.textContent)
             if (result === null) {
                 
             }
