@@ -31,11 +31,10 @@ function createTask(value, id, status = 1)
     }
     task.classList.add("item")
     task.appendChild(checkElt)
-    task.appendChild(spanElt)
     if (status == 2) {
-        console.log("coucou")
         spanElt.setAttribute("style", "color:gray;text-decoration:line-through")
     }
+    task.appendChild(spanElt)
     document.getElementById("list_task").appendChild(task)
 
     // We can edit the task by clicking it
