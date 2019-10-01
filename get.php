@@ -3,8 +3,11 @@
 
     //  header('Content-Type: application/json');
 
+    $json_array = array();
     $db = dbConnect();
     $query = $db->query('SELECT id, content FROM todo_list');
-    $data = $query->fetch();
+    while ($data = $query->fetch()) {
+        $json_array[] = $data;
+    }
     echo json_encode($data);
     
