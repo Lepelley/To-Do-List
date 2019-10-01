@@ -32,7 +32,7 @@ function createTask(value, status = 1, id = 0)
     task.classList.add("item")
     task.appendChild(checkElt)
     task.appendChild(taskElt)
-    document.getElementById("add_task)").appendChild(task)
+    document.getElementById("add_task").appendChild(task)
     return task;
 }
 
