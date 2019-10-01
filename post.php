@@ -2,7 +2,12 @@
     require 'config.php';
     $db = dbConnect();
 
-    print_r($_POST);
+    // Takes raw data from the request
+    $json = file_get_contents('php://input');
+
+    // Converts it into a PHP object
+    $data = json_decode($json);
+    print_r($data);
 
     if (isset($_POST) && $_POST['content'] != '') {
         if ($_POST['id'] > 0) { // Update task
