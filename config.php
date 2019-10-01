@@ -7,7 +7,7 @@
 
     function dbConnect()
     {
-        $db = new \PDO($this->dns . ':host=' . $this->host . ';dbname=' . $this->db . ';charset=utf8', $this->user, $this->password);
+        $db = new \PDO($dns . ':host=' . $host . ';dbname=' . $db . ';charset=utf8', $user, $password);
         $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $db->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
         return $db;
