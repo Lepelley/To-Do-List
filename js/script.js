@@ -100,7 +100,7 @@ addTaskElt.appendChild(buttonElt)
 ajaxGet("https://www.lepelley.fr/projects/to-do/get.php", function (response) {
     const tasks = JSON.parse(response);
     tasks.forEach(task => {
-        createTask(task.content, task.id, task.value)
+        createTask(task.content, task.id, task.status)
     })
 })
 
