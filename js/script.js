@@ -33,7 +33,7 @@ function createTask(value, id, status = 1)
     task.appendChild(checkElt)
     if (status == 2) {
         spanElt.setAttribute("style", "color:gray;text-decoration:line-through")
-        checkElt.setAttribute("checked")
+        checkElt.setAttribute("checked", "")
     }
     task.appendChild(checkElt)
     task.appendChild(spanElt)
