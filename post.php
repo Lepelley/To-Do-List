@@ -15,19 +15,23 @@
             $query->bindParam(':status', $data->status, PDO::PARAM_INT);
             $query->bindParam(':id', $data->id, PDO::PARAM_INT);
             $query->execute();
+            http_response_code(200);
         }
         else { // Add task
             $query = $db->prepare('INSERT INTO todo_list (content, status) VALUES (:content, :status)');
             $query->bindParam(':content', htmlspecialchars($data->content));
             $query->bindParam(':status', 1);
             $query->execute();
+            http_response_code(201);
         }
     }
     elseif ($data->status == 0 && $data->id > 0) { // Delete task
         $query = $db->prepare('DELETE FROM todo_list WHERE id = :id');
         $query->bindParam(':id', $data->id, PDO::PARAM_INT);
         $query->execute();
+        http_response_code(200);
     }
     else {
+        http_response_code(503);
         echo '<h1>Il ne faut pas regarder les fichiers des autres, chenapan</h1>';
     }
