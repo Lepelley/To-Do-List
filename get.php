@@ -10,5 +10,6 @@
         print_r($data);
         $json_array[] = $data;
     }
-    echo json_encode($data);
+    echo '<br>' . $data . '<br>'; 
+    echo json_encode($data) . '<br>';
     
