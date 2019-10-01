@@ -90,13 +90,13 @@ buttonElt.addEventListener("click", function(e) {
         e.preventDefault()
         console.log(e.target.task.value)
         if (e.target.task.value !== "") {
-            var task = {
+            const task = {
                 content: e.target.task.value,
                 status: 1
             }
 
             ajaxPost("https://www.lepelley.fr/projects/to-do/post.php", task, function(response) {
-                createTask(e.target.task.value)
+                createTask(task.content)
                 console.log(response)
             }, true)
 
