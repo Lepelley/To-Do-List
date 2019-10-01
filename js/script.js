@@ -33,6 +33,7 @@ function createTask(value, id, status = 1)
     task.appendChild(checkElt)
     task.appendChild(spanElt)
     if (status == 2) {
+        console.log("coucou")
         spanElt.setAttribute("style", "color:gray;text-decoration:line-through")
     }
     document.getElementById("list_task").appendChild(task)
