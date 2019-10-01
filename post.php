@@ -7,8 +7,13 @@
 
     // Converts it into a PHP object
     $data = json_decode($json);
-
-    if ($data->content != '') {
+    if ($data->status == 0 && $data->id > 0) { // Delete task
+        $query = $db->prepare('DELETE FROM todo_list WHERE id = :id');
+        $query->bindParam(':id', $data->id, PDO::PARAM_INT);
+        $query->execute();
+        http_response_code(200);
+    }
+    elseif ($data->content != '') {
         if ($data->id > 0) { // Update task
             $query = $db->prepare('UPDATE todo_list SET content = :content, status = :status WHERE id = :id');
             $query->bindParam(':content', htmlspecialchars($data->content));
@@ -25,12 +30,6 @@
             http_response_code(201);
             echo $db->lastInsertId();
         }
-    }
-    elseif ($data->status == 0 && $data->id > 0) { // Delete task
-        $query = $db->prepare('DELETE FROM todo_list WHERE id = :id');
-        $query->bindParam(':id', $data->id, PDO::PARAM_INT);
-        $query->execute();
-        http_response_code(200);
     }
     else {
         http_response_code(503);
