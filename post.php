@@ -11,7 +11,7 @@
         $query = $db->prepare('DELETE FROM todo_list WHERE id = :id');
         $query->bindParam(':id', $data->id, PDO::PARAM_INT);
         $query->execute();
-        http_response_code(200);
+        http_response_code(200); // OK
     }
     elseif ($data->content != '') {
         if ($data->id > 0) { // Update task
@@ -20,18 +20,18 @@
             $query->bindParam(':status', $data->status, PDO::PARAM_INT);
             $query->bindParam(':id', $data->id, PDO::PARAM_INT);
             $query->execute();
-            http_response_code(200);
+            http_response_code(200); // OK
         }
         else { // Add task
             $query = $db->prepare('INSERT INTO todo_list (content, status) VALUES (:content, :status)');
             $query->bindParam(':content', htmlspecialchars($data->content));
             $query->bindParam(':status', $data->status);
             $query->execute();
-            http_response_code(201);
+            http_response_code(201); // Create
             echo $db->lastInsertId();
         }
     }
     else {
-        http_response_code(503);
-        echo '<h1>Il ne faut pas regarder les fichiers des autres, chenapan</h1>';
+        http_response_code(503); // Service unavailable
+        echo '<h1>Nothing to see here !</h1>';
     }

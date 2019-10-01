@@ -11,7 +11,7 @@
         $json_array[] = $data;
     }
 
-    http_response_code(200);
+    http_response_code(200); // OK
 
     echo json_encode($json_array);
     
