@@ -88,6 +88,7 @@ buttonElt.addEventListener("click", function(e) {
 
     formElt.addEventListener("submit", function(e) {
         e.preventDefault()
+        console.log(e.target.task.value)
         if (e.target.task.value !== "") {
             var task = {
                 content: e.target.task.value,
