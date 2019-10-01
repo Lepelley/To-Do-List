@@ -32,7 +32,7 @@ function createTask(value, status = 1, id = 0)
     task.classList.add("item")
     task.appendChild(checkElt)
     task.appendChild(spanElt)
-    document.getElementById("add_task").appendChild(task)
+    document.getElementById("list_task").appendChild(task)
 
     // We can edit the task by clicking it
 
@@ -42,7 +42,7 @@ function createTask(value, status = 1, id = 0)
             
         }
         else if (result === "") {
-            document.getElementById("list_task").removeChild(itemElt)
+            document.getElementById("list_task").removeChild(task)
         }
         else {
             spanElt.textContent = result
