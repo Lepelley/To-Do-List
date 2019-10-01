@@ -20,6 +20,22 @@ function createInput(type, value = "", name =  "", placeholder = "", require = f
     return input
 }
 
+function createTask(value, status = 1, id = 0)
+{
+    const task = document.createElement("span")
+    const checkElt = createInput("checkbox")
+    const taskElt = document.createElement("span")
+    taskElt.textContent = value
+    if (id !== 0) {
+        task.id = id
+    }
+    task.classList.add("item")
+    task.appendChild(checkElt)
+    task.appendChild(taskElt)
+    document.getElementById("add_task)").appendChild(task)
+    return task;
+}
+
 const addTaskElt = document.getElementById("add_task")
 const formElt = document.getElementById("list_task")
 const inputElt = createInput("text", "", "task", "Entrez votre tâche")
@@ -28,6 +44,14 @@ const submitElt = createInput("submit", "Ajouter")
 const buttonElt = document.createElement("button")
 buttonElt.textContent = "Ajouter une tâche"
 addTaskElt.appendChild(buttonElt)
+
+
+ajaxGet("https://www.lepelley.fr/projects/to-do/get.php", function (response) {
+    const tasks = JSON.parse(response);
+    tasks.forEach(task => {
+        createTask(task.content, task.value, task.id)
+    })
+})
 
 buttonElt.addEventListener("click", function(e) {
     addTaskElt.removeChild(buttonElt)
@@ -42,11 +66,7 @@ buttonElt.addEventListener("click", function(e) {
         const checkElt = createInput("checkbox")
         const taskElt = document.createElement("span")
         if (e.target.task.value !== "") {
-            taskElt.textContent = e.target.task.value
-            itemElt.classList.add("item")
-            itemElt.appendChild(checkElt)
-            itemElt.appendChild(taskElt)
-            formElt.appendChild(itemElt)
+            createTask(e.target.task.value)
             // Switch form and button
             inputElt.value = ""
             inputElt.setAttribute("autocomplete", "off")
