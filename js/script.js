@@ -24,15 +24,41 @@ function createTask(value, status = 1, id = 0)
 {
     const task = document.createElement("span")
     const checkElt = createInput("checkbox")
-    const taskElt = document.createElement("span")
-    taskElt.textContent = value
+    const spanElt = document.createElement("span")
+    spanElt.textContent = value
     if (id !== 0) {
         task.id = id
     }
     task.classList.add("item")
     task.appendChild(checkElt)
-    task.appendChild(taskElt)
+    task.appendChild(spanElt)
     document.getElementById("add_task").appendChild(task)
+
+    // We can edit the task by clicking it
+
+    spanElt.addEventListener("click", function(e) {
+        const result = prompt("Modifier la tâche", e.target.textContent)
+        if (result === null) {
+            
+        }
+        else if (result === "") {
+            document.getElementById("list_task").removeChild(itemElt)
+        }
+        else {
+            spanElt.textContent = result
+        }
+    })
+
+    checkElt.addEventListener("change", function(e) {
+        if (e.target.checked) { // if check, task done
+            spanElt.setAttribute("style", "color:gray;text-decoration:line-through")
+        }
+        else {
+            spanElt.setAttribute("style", "color:black")
+        }
+    })
+
+
     return task;
 }
 
@@ -49,7 +75,8 @@ addTaskElt.appendChild(buttonElt)
 ajaxGet("https://www.lepelley.fr/projects/to-do/get.php", function (response) {
     const tasks = JSON.parse(response);
     tasks.forEach(task => {
-        createTask(task.content, task.value, task.id)
+        const taskElt = createTask(task.content, task.value, task.id)
+
     })
 })
 
@@ -74,29 +101,5 @@ buttonElt.addEventListener("click", function(e) {
             addTaskElt.removeChild(submitElt)
             addTaskElt.appendChild(buttonElt)
         }
-
-
-        // We can edit the task by clicking it
-        taskElt.addEventListener("click", function(e) {
-            const result = prompt("Modifier la tâche", e.target.textContent)
-            if (result === null) {
-                
-            }
-            else if (result === "") {
-                formElt.removeChild(itemElt)
-            }
-            else {
-                taskElt.textContent = result
-            }
-        })
-
-        checkElt.addEventListener("change", function(e) {
-            if (e.target.checked) { // if check, task done
-                taskElt.setAttribute("style", "color:gray;text-decoration:line-through")
-            }
-            else {
-                taskElt.setAttribute("style", "color:black")
-            }
-        })
     })
 })
