@@ -96,6 +96,7 @@ buttonElt.addEventListener("click", function(e) {
 
             ajaxPost("https://www.lepelley.fr/projects/to-do/post.php", task, function(response) {
                 createTask(e.target.task.value)
+                console.log(response)
             }, true)
 
             // Switch form and button
