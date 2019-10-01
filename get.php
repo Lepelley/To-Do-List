@@ -5,4 +5,6 @@
 
     $db = dbConnect();
     $query = $db->query('SELECT id, content FROM todo_list');
-    print_r($query->fetch());
+    $data = $query->fetch();
+    echo json_encode($data);
+    
