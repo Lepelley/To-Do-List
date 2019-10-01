@@ -2,6 +2,8 @@
     require 'config.php';
     $db = dbConnect();
 
+    print_r($_POST);
+
     if (isset($_POST) && $_POST['content'] != '') {
         if ($_POST['id'] > 0) { // Update task
             $query = $db->prepare('UPDATE todo_list SET content = :content, status = :status WHERE id = :id');
