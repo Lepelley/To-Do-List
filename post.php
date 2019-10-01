@@ -20,7 +20,7 @@
         else { // Add task
             $query = $db->prepare('INSERT INTO todo_list (content, status) VALUES (:content, :status)');
             $query->bindParam(':content', htmlspecialchars($data->content));
-            $query->bindParam(':status', 1);
+            $query->bindParam(':status', $data->status);
             $query->execute();
             http_response_code(201);
         }
