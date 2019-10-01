@@ -23,6 +23,7 @@
             $query->bindParam(':status', $data->status);
             $query->execute();
             http_response_code(201);
+            echo $db->lastInsertId();
         }
     }
     elseif ($data->status == 0 && $data->id > 0) { // Delete task

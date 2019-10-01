@@ -20,7 +20,7 @@ function createInput(type, value = "", name =  "", placeholder = "", require = f
     return input
 }
 
-function createTask(value, status = 1, id = 0)
+function createTask(value, id, status = 1)
 {
     const task = document.createElement("span")
     const checkElt = createInput("checkbox")
@@ -37,24 +37,46 @@ function createTask(value, status = 1, id = 0)
     // We can edit the task by clicking it
 
     spanElt.addEventListener("click", function(e) {
-        const result = prompt("Modifier la tâche", e.target.textContent)
-        if (result === null) {
-            
+        const updateTask = {
+            id: task.id,
+            content: spanElt.textContent,
+            status: 1
         }
+        const result = prompt("Modifier la tâche", e.target.textContent)
+        if (result === null) {}
         else if (result === "") {
-            document.getElementById("list_task").removeChild(task)
+            updateTask.status = 0
+            ajaxPost("https://www.lepelley.fr/projects/to-do/post.php", updateTask, function(response) {
+                document.getElementById("list_task").removeChild(task)
+                //console.log(response)
+            }, true)
         }
         else {
-            spanElt.textContent = result
+            ajaxPost("https://www.lepelley.fr/projects/to-do/post.php", updateTask, function(response) {
+                spanElt.textContent = result
+                //console.log(response)
+            }, true)
         }
     })
 
     checkElt.addEventListener("change", function(e) {
+        const updateTask = {
+            id: task.id,
+            content: spanElt.textContent,
+            status: 1
+        }
         if (e.target.checked) { // if check, task done
-            spanElt.setAttribute("style", "color:gray;text-decoration:line-through")
+            updateTask.status = 2
+            ajaxPost("https://www.lepelley.fr/projects/to-do/post.php", updateTask, function(response) {
+                spanElt.setAttribute("style", "color:gray;text-decoration:line-through")
+                //console.log(response)
+            }, true)
         }
         else {
-            spanElt.setAttribute("style", "color:black")
+            ajaxPost("https://www.lepelley.fr/projects/to-do/post.php", updateTask, function(response) {
+                spanElt.setAttribute("style", "color:black")
+                //console.log(response)
+            }, true)
         }
     })
 
@@ -75,7 +97,7 @@ addTaskElt.appendChild(buttonElt)
 ajaxGet("https://www.lepelley.fr/projects/to-do/get.php", function (response) {
     const tasks = JSON.parse(response);
     tasks.forEach(task => {
-        createTask(task.content, task.value, task.id)
+        createTask(task.content, task.id, task.value)
     })
 })
 
@@ -96,8 +118,7 @@ buttonElt.addEventListener("click", function(e) {
             }
 
             ajaxPost("https://www.lepelley.fr/projects/to-do/post.php", task, function(response) {
-                createTask(task.content)
-                //console.log(response)
+                createTask(task.content, response, 1)
             }, true)
 
             // Switch form and button
