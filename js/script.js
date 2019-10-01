@@ -75,8 +75,7 @@ addTaskElt.appendChild(buttonElt)
 ajaxGet("https://www.lepelley.fr/projects/to-do/get.php", function (response) {
     const tasks = JSON.parse(response);
     tasks.forEach(task => {
-        const taskElt = createTask(task.content, task.value, task.id)
-
+        createTask(task.content, task.value, task.id)
     })
 })
 
@@ -89,11 +88,16 @@ buttonElt.addEventListener("click", function(e) {
 
     formElt.addEventListener("submit", function(e) {
         e.preventDefault()
-        const itemElt = document.createElement("span")
-        const checkElt = createInput("checkbox")
-        const taskElt = document.createElement("span")
         if (e.target.task.value !== "") {
-            createTask(e.target.task.value)
+            var task = {
+                content: e.target.task.value,
+                status: 1
+            }
+
+            ajaxPost("https://www.lepelley.fr/projects/to-do/post.php", task, function(response) {
+                createTask(e.target.task.value)
+            })
+
             // Switch form and button
             inputElt.value = ""
             inputElt.setAttribute("autocomplete", "off")
