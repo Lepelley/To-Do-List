@@ -145,7 +145,8 @@ buttonElt.addEventListener("click", function(e) {
             }
 
             ajaxPost("https://www.lepelley.fr/projects/to-do/post.php", task, function(response) { // AJAX add task
-                createTask(task.content, response, 1)
+                const id = JSON.parse(response)
+                createTask(task.content, id, 1)
             }, true)
 
             // Switch form and button
