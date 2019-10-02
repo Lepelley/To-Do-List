@@ -45,6 +45,7 @@ function createTask(value, id, status = 1)
     const task = document.createElement("span")
     const checkElt = createInput("checkbox")
     const spanElt = document.createElement("span")
+    task.id = id
     spanElt.textContent = value
     task.classList.add("item")
     task.appendChild(checkElt)
