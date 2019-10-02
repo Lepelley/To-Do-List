@@ -62,11 +62,13 @@ function createTask(value, id, status = 1)
     spanElt.addEventListener("click", function(e) {
         const updateTask = {
             id: task.id,
-            content: spanElt.textContent,
+            content: e.target.textContent,
             status: 1
         }
         const result = prompt("Modifier la tâche", e.target.textContent)
-        if (result === null) {}
+        if (result === null) {
+
+        }
         else if (result === "") {
             updateTask.status = 0
             ajaxPost("https://www.lepelley.fr/projects/to-do/post.php", updateTask, function(response) {
