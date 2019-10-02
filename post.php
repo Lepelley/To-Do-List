@@ -1,6 +1,5 @@
 <?php
-    header("Access-Control-Allow-Origin: *");
-    
+
     require 'config.php';
     $db = dbConnect();
 
