@@ -23,13 +23,12 @@
         http_response_code(200); // OK
     }
     elseif ($data->content != '' && !isset($data->id)) { // Add task
-            $query = $db->prepare('INSERT INTO todo_list (content, status) VALUES (:content, :status)');
-            $query->bindParam(':content', htmlspecialchars($data->content));
-            $query->bindParam(':status', $data->status);
-            $query->execute();
-            echo $db->lastInsertId();
-            http_response_code(201); // Create
-        }
+        $query = $db->prepare('INSERT INTO todo_list (content, status) VALUES (:content, :status)');
+        $query->bindParam(':content', htmlspecialchars($data->content));
+        $query->bindParam(':status', $data->status);
+        $query->execute();
+        echo json_encode($db->lastInsertId());
+        http_response_code(201); // Create
     }
     else {
         http_response_code(503); // Service unavailable
