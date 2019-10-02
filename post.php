@@ -4,12 +4,13 @@
 
     // Takes raw data from the request
     $json = file_get_contents('php://input');
-
     // Converts it into a PHP object
     $data = json_decode($json);
+
     if ($data->status == 0 && $data->id > 0) { // Delete task
-        $query = $db->prepare('DELETE FROM todo_list WHERE id = :id');
+        $query = $db->prepare('DELETE FROM todo_list WHERE id = :id OR status = :status');
         $query->bindParam(':id', $data->id, PDO::PARAM_INT);
+        $query->bindParam(':status', $data->status, PDO::PARAM_INT);
         $query->execute();
         http_response_code(200); // OK
     }
@@ -28,7 +29,7 @@
             $query->bindParam(':status', $data->status);
             $query->execute();
             http_response_code(201); // Create
-            echo $db->lastInsertId();
+            //echo $db->lastInsertId();
         }
     }
     else {
